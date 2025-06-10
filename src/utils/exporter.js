@@ -48,12 +48,14 @@ Fk:loadTranslationTable { ["${pkg.internal_name}"] = "${pkg.name}" }\n\n`;
 
   pkg.generals.forEach((gen) => {
     const gName = gen.internal_name;
-    luaCode += `_general_val = General:new(extension, "${gName}", "shu", 4)\n`;
-    // TODO: 更多信息...
-    luaCode += `_general_val:addSkills {}\n`;
-    luaCode += `Fk:loadTranslationTable {
-  ["${gName}"] = "${gen.name}",
-}\n`;
+    luaCode += `_general_val = General:new(extension, "${gName}", "${gen.kingdom ?? "wei"}", ${gen.hp})\n`;
+    if (gen.maxHp !== gen.hp) luaCode += `_general_val.maxHp = ${gen.maxHp}\n`;
+    if (gen.gender) luaCode += `_general_val.gender = ${gen.gender}\n`;
+    if (gen.shield) luaCode += `_general_val.shield = ${gen.shield}\n`
+    if (gen.hidden) luaCode += '_general_val.hidden = true\n';
+    luaCode += `_general_val:addSkills {${gen.skills.map(s => `'${s}'`).join(', ')}}\n`;
+    luaCode += `Fk:loadTranslationTable {\n  ["${gName}"] = "${gen.name}",\n`;
+    luaCode += '}\n';
     luaCode += '\n';
   });
 
@@ -86,11 +88,12 @@ const generateSkillCode = (skill) => {
 
 local _skill_val = fk.CreateSkill {
   name = "${skill.internal_name}",
+  tags = {${skill.tags.join(", ")}},
 }
 
 Fk:loadTranslationTable {
   ["${skill.internal_name}"] = "${skill.name}",
-  [":${skill.internal_name}"] = "${skill.description}",
+  [":${skill.internal_name}"] = ${JSON.stringify(skill.description)},
 }\n\n`;
 
   skill.effects.forEach((effect) => {

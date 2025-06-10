@@ -23,6 +23,11 @@
     <el-form-item label="技能描述" prop="description">
       <el-input type="textarea" :rows="4" v-model="localValue.description" placeholder="这是一个刚创建的技能，请添加相关信息"></el-input>
     </el-form-item>
+    <el-form-item label="技能标签" prop="tags">
+      <el-select v-model="localValue.tags" multiple placeholder="Select" style="width: 100%">
+        <el-option v-for="item in skillTagOptions" :key="item.value" :label="item.label" :value="item.value"
+      /></el-select>
+    </el-form-item>
     <el-form-item label="技能效果">
       <el-row>
         <el-col :span="24">
@@ -71,6 +76,25 @@ const updateValue = (value) => {
   localValue.value = value;
   emits('update:modelValue', localValue.value);
 };
+const skillTagOptions = [
+  { label: '主公技', value: 'Skill.Lord' },
+  { label: '锁定技', value: 'Skill.Compulsory' }
+  // { label: '限定技', value: 'Skill.Limited' },
+  // { label: '觉醒技', value: 'Skill.Wake' },
+  // { label: '转换技', value: 'Skill.Switch' },
+  // { label: '使命技', value: 'Skill.Quest' },
+  // { label: '持恒技', value: 'Skill.Permanent' },
+  // { label: '主将技', value: 'Skill.MainPlace' },
+  // { label: '副将技', value: 'Skill.DeputyPlace' },
+  // { label: '隐匿技', value: 'Skill.Hidden' },
+  // { label: '势力技', value: 'Skill.AttachedKingdom' },
+  // { label: '蓄力技', value: 'Skill.Charge' },
+  // { label: '宗族技', value: 'Skill.Family' },
+  // { label: '连招技', value: 'Skill.Combo' },
+  // { label: '韵律技', value: 'Skill.Rhyme' },
+  // { label: '奋武技', value: 'Skill.Force' },
+  // { label: '昂扬技', value: 'Skill.Spirited' }
+];
 watchEffect(() => {
   updateValue(localValue.value);
 });

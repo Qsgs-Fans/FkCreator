@@ -92,6 +92,12 @@ const initBlockly = () => {
     scrollbars: true,
     trashcan: true,
     collapse: true,
+    renderer: 'thrasos',
+    grid: {
+      spacing: 20,
+      length: 2,
+      colour: '#ccc'
+    },
     zoom: {
       controls: true,
       wheel: true,
@@ -150,10 +156,14 @@ const onBlocklyChange = (event) => {
 
 const code = ref('');
 const showCodeDialog = ref(false);
-const testMethod = () => {
+const testMethod = async () => {
   const rawWorkspace = toRaw(workspace.value);
-  code.value = luaGenerator.workspaceToCode(rawWorkspace);
-  showCodeDialog.value = true;
+  try {
+    code.value = luaGenerator.workspaceToCode(rawWorkspace);
+    showCodeDialog.value = true;
+  } catch (error) {
+    ElMessageBox.alert('预览lua失败: ' + error.message, { type: 'error' });
+  }
 };
 const saveMethod = () => {
   const rawWorkspace = toRaw(workspace.value);

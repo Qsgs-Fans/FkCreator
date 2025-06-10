@@ -20,20 +20,51 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-form-item label="性别" prop="gender">
-      <el-select v-model="localValue.gender">
-        <el-option value="male" label="男" />
-        <el-option value="female" label="女" />
-        <el-option value="other" label="其他" />
-      </el-select>
-    </el-form-item>
+    <el-row :gutter="10">
+      <el-col :span="12">
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="localValue.gender">
+            <el-option value="General.Male" label="男" />
+            <el-option value="General.Female" label="女" />
+            <el-option value="General.Agender" label="无性别" />
+            <el-option value="General.Bigender" label="双性别（用于男女同框）" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
+        <el-form-item label="势力" prop="kingdom">
+          <el-select v-model="localValue.kingdom">
+            <el-option value="wei" label="魏" />
+            <el-option value="shu" label="蜀" />
+            <el-option value="wu" label="吴" />
+            <el-option value="qun" label="群" />
+            <el-option value="jin" label="晋" />
+            <el-option value="god" label="神" />
+            <el-option value="evil" label="魔" />
+            <el-option value="qin" label="秦" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
     <el-row>
       <el-form-item label="初始体力" class="number-input" prop="hp">
-        <el-input-number v-model="localValue.hp"></el-input-number>
+        <el-input-number v-model="localValue.hp" :min="1" :max="1000" @change="localValue.maxHp = Math.max(localValue.maxHp, localValue.hp)" />
       </el-form-item>
       <el-form-item label="体力上限" class="number-input" prop="maxHp">
-        <el-input-number v-model="localValue.maxHp"></el-input-number>
+        <el-input-number v-model="localValue.maxHp" :min="localValue.hp" :max="1000" />
       </el-form-item>
+      <el-form-item label="初始护甲" class="number-input" prop="shield">
+        <el-input-number v-model="localValue.shield" :min="0" :max="5" />
+      </el-form-item>
+      <el-switch
+        v-model="localValue.hidden"
+        class="mb-2"
+        style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+        active-text="隐藏武将（只能通过自由选将选择）"
+        inactive-text="正常武将"
+        prop="hidden"
+      />
     </el-row>
     <el-form-item label="绑定技能">
       <el-autocomplete v-model="skillSearch" :fetch-suggestions="querySkillSearch" placeholder="请输入技能名称 或 技能内部名称" @select="handleSkillSelect">
