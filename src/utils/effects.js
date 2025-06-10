@@ -405,14 +405,14 @@ export const effectTypes = [
   },
 
 
-//   ---@class TargetModSpec: StatusSkillSpec
-// ---@field public bypass_times? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, scope: integer, card?: Card, to?: Player): any  角色使用牌是否无次数限制
-// ---@field public residue_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, scope: integer, card?: Card, to?: Player): number? @ 角色使用牌的剩余次数
-// ---@field public fix_times_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, scope: integer, card?: Card, to?: Player): number? @ 角色使用牌的固定次数
-// ---@field public bypass_distances? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, card?: Card, to?: Player): any @ 角色使用牌是否无距离限制
-// ---@field public distance_limit_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, card?: Card, to?: Player): number? @ 角色使用牌的距离限制
-// ---@field public extra_target_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, card?: Card): number? @ 角色使用牌的额外目标数
-// ---@field public target_tip_func? fun(self: TargetModSkill, player: Player, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, selectable: boolean, extra_data: any): string|TargetTipDataSpec? @ 角色使用牌的目标提示
+  //   ---@class TargetModSpec: StatusSkillSpec
+  // ---@field public bypass_times? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, scope: integer, card?: Card, to?: Player): any  角色使用牌是否无次数限制
+  // ---@field public residue_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, scope: integer, card?: Card, to?: Player): number? @ 角色使用牌的剩余次数
+  // ---@field public fix_times_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, scope: integer, card?: Card, to?: Player): number? @ 角色使用牌的固定次数
+  // ---@field public bypass_distances? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, card?: Card, to?: Player): any @ 角色使用牌是否无距离限制
+  // ---@field public distance_limit_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, card?: Card, to?: Player): number? @ 角色使用牌的距离限制
+  // ---@field public extra_target_func? fun(self: TargetModSkill, player: Player, skill: ActiveSkill, card?: Card): number? @ 角色使用牌的额外目标数
+  // ---@field public target_tip_func? fun(self: TargetModSkill, player: Player, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, selectable: boolean, extra_data: any): string|TargetTipDataSpec? @ 角色使用牌的目标提示
 
   {
     id: 'targetmod',
@@ -436,12 +436,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'ActiveSkill'
             },
             {
-              name:'scope',
+              name: 'scope',
               message: '作用范围',
               type: 'integer'
             },
@@ -460,7 +460,7 @@ export const effectTypes = [
           blockData: null
         },
         {
-          name:'residue_func',
+          name: 'residue_func',
           description: '角色使用牌的剩余次数',
           type: 'client',
           params: [
@@ -475,12 +475,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'ActiveSkill'
             },
             {
-              name:'scope',
+              name: 'scope',
               message: '作用范围',
               type: 'integer'
             },
@@ -496,7 +496,7 @@ export const effectTypes = [
             }
           ],
           ret: 'number',
-          blockData: null 
+          blockData: null
         },
         {
           name: 'fix_times_func',
@@ -514,12 +514,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'ActiveSkill'
             },
             {
-              name:'scope',
+              name: 'scope',
               message: '作用范围',
               type: 'integer'
             },
@@ -553,9 +553,9 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
-              type: 'ActiveSkill' 
+              type: 'ActiveSkill'
             },
             {
               name: 'card',
@@ -587,7 +587,7 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'ActiveSkill'
             },
@@ -621,7 +621,7 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'ActiveSkill'
             },
@@ -655,12 +655,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
@@ -670,7 +670,7 @@ export const effectTypes = [
               type: 'Card'
             },
             {
-              name:'selectable',
+              name: 'selectable',
               message: '是否可选',
               type: 'boolean'
             },
@@ -687,11 +687,11 @@ export const effectTypes = [
     }
   },
 
-//   ---@class FilterSpec: StatusSkillSpec
-// ---@field public card_filter? fun(self: FilterSkill, card: Card, player: Player, isJudgeEvent: boolean?): any @ 卡牌筛选
-// ---@field public view_as? fun(self: FilterSkill, player: Player, card: Card): Card? @ 视为某牌
-// ---@field public equip_skill_filter? fun(self: FilterSkill, skill: Skill, player: Player): string? 装备技能筛选
-// ---@field public handly_cards? fun(self: FilterSkill, player: Player): integer[]? @ 视为拥有可以如手牌般使用或打出的牌
+  //   ---@class FilterSpec: StatusSkillSpec
+  // ---@field public card_filter? fun(self: FilterSkill, card: Card, player: Player, isJudgeEvent: boolean?): any @ 卡牌筛选
+  // ---@field public view_as? fun(self: FilterSkill, player: Player, card: Card): Card? @ 视为某牌
+  // ---@field public equip_skill_filter? fun(self: FilterSkill, skill: Skill, player: Player): string? 装备技能筛选
+  // ---@field public handly_cards? fun(self: FilterSkill, player: Player): integer[]? @ 视为拥有可以如手牌般使用或打出的牌
   {
     id: 'filter',
     name: '视为类',
@@ -757,7 +757,7 @@ export const effectTypes = [
               type: 'FilterSkill'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'Skill'
             },
@@ -793,10 +793,10 @@ export const effectTypes = [
     }
   },
 
-// ---@class InvaliditySpec: StatusSkillSpec
-// ---@field public invalidity_func? fun(self: InvaliditySkill, from: Player, skill: Skill): any @ 判定角色的技能是否无效
-// ---@field public invalidity_attackrange? fun(self: InvaliditySkill, player: Player, card: Weapon): any @ 判定武器的攻击范围是否无效
-// ---@field public recheck_invalidity? boolean @ 是否涉及其他技能的失效性
+  // ---@class InvaliditySpec: StatusSkillSpec
+  // ---@field public invalidity_func? fun(self: InvaliditySkill, from: Player, skill: Skill): any @ 判定角色的技能是否无效
+  // ---@field public invalidity_attackrange? fun(self: InvaliditySkill, player: Player, card: Weapon): any @ 判定武器的攻击范围是否无效
+  // ---@field public recheck_invalidity? boolean @ 是否涉及其他技能的失效性
 
   {
     id: 'invalidity',
@@ -820,7 +820,7 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'skill',
+              name: 'skill',
               message: '技能',
               type: 'Skill'
             }
@@ -857,9 +857,9 @@ export const effectTypes = [
   },
 
 
-//   ---@class VisibilitySpec: StatusSkillSpec
-// ---@field public card_visible? fun(self: VisibilitySkill, player: Player, card: Card): any @ 判定角色是否可以看到某牌
-// ---@field public role_visible? fun(self: VisibilitySkill, player: Player, target: Player): any @ 判定角色是否可以看到某角色的身份
+  //   ---@class VisibilitySpec: StatusSkillSpec
+  // ---@field public card_visible? fun(self: VisibilitySkill, player: Player, card: Card): any @ 判定角色是否可以看到某牌
+  // ---@field public role_visible? fun(self: VisibilitySkill, player: Player, target: Player): any @ 判定角色是否可以看到某角色的身份
   {
     id: 'visibility',
     name: '可见类',
@@ -918,15 +918,15 @@ export const effectTypes = [
     }
   },
 
-// ---@class ActiveSkillSpec: UsableSkillSpec
-// ---@field public can_use? fun(self: ActiveSkill, player: Player): any @ 判断主动技能否可以发动
-// ---@field public card_filter? fun(self: ActiveSkill, player: Player, to_select: integer, selected: integer[]): any @ 判断卡牌能否选择
-// ---@field public target_filter? fun(self: ActiveSkill, player: Player?, to_select: Player, selected: Player[], selected_cards: integer[]): any @ 判定目标能否选择
-// ---@field public feasible? fun(self: ActiveSkill, player: Player, selected: Player[], selected_cards: integer[], card: Card): any @ 判断卡牌和目标是否符合技能限制
-// ---@field public on_use? fun(self: ActiveSkill, room: Room, skillUseEvent: SkillUseData): any @ 使用技能时的效果
-// ---@field public prompt? string|fun(self: ActiveSkill, player: Player, selected_cards: integer[], selected_targets: Player[]): string @ 提示信息
-// ---@field public interaction? fun(self: ActiveSkill, player: Player): table? @ 选项框
-// ---@field public target_tip? fun(self: ActiveSkill, player: Player, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, selectable: boolean, extra_data: any): string|TargetTipDataSpec? @ 目标提示
+  // ---@class ActiveSkillSpec: UsableSkillSpec
+  // ---@field public can_use? fun(self: ActiveSkill, player: Player): any @ 判断主动技能否可以发动
+  // ---@field public card_filter? fun(self: ActiveSkill, player: Player, to_select: integer, selected: integer[]): any @ 判断卡牌能否选择
+  // ---@field public target_filter? fun(self: ActiveSkill, player: Player?, to_select: Player, selected: Player[], selected_cards: integer[]): any @ 判定目标能否选择
+  // ---@field public feasible? fun(self: ActiveSkill, player: Player, selected: Player[], selected_cards: integer[], card: Card): any @ 判断卡牌和目标是否符合技能限制
+  // ---@field public on_use? fun(self: ActiveSkill, room: Room, skillUseEvent: SkillUseData): any @ 使用技能时的效果
+  // ---@field public prompt? string|fun(self: ActiveSkill, player: Player, selected_cards: integer[], selected_targets: Player[]): string @ 提示信息
+  // ---@field public interaction? fun(self: ActiveSkill, player: Player): table? @ 选项框
+  // ---@field public target_tip? fun(self: ActiveSkill, player: Player, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, selectable: boolean, extra_data: any): string|TargetTipDataSpec? @ 目标提示
 
 
   {
@@ -975,7 +975,7 @@ export const effectTypes = [
               type: 'integer'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选卡牌',
               type: 'integer[]'
             }
@@ -1004,12 +1004,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             }
@@ -1033,12 +1033,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
@@ -1054,7 +1054,7 @@ export const effectTypes = [
         {
           name: 'on_use',
           description: '使用技能时的效果',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1067,7 +1067,7 @@ export const effectTypes = [
               type: 'Room'
             },
             {
-              name:'skillUseEvent',
+              name: 'skillUseEvent',
               message: '技能使用事件',
               type: 'SkillUseData'
             }
@@ -1091,17 +1091,17 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
             {
-              name:'selected_targets',
+              name: 'selected_targets',
               message: '已选目标',
               type: 'Player[]'
             }
           ],
-          ret:'string',
+          ret: 'string',
           blockData: null
         },
         {
@@ -1144,12 +1144,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
@@ -1159,7 +1159,7 @@ export const effectTypes = [
               type: 'Card?'
             },
             {
-              name:'selectable',
+              name: 'selectable',
               message: '是否可选',
               type: 'boolean'
             },
@@ -1168,8 +1168,8 @@ export const effectTypes = [
               message: '额外数据',
               type: 'any'
             }
-          ],          
-          ret:'string|TargetTipDataSpec?',
+          ],
+          ret: 'string|TargetTipDataSpec?',
           blockData: null
         }
       ]
@@ -1178,20 +1178,20 @@ export const effectTypes = [
 
 
 
-// ---@class CardSkillSpec: UsableSkillSpec
-// ---@field public mod_target_filter? fun(self: ActiveSkill, player: Player, to_select: Player, selected: Player[], card: Card, extra_data: any): any @ 判定目标是否合法（例如不能杀自己，火攻无手牌目标）
-// ---@field public target_filter? fun(self: CardSkill, player: Player?, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, extra_data: any): any @ 判定目标能否选择
-// ---@field public feasible? fun(self: CardSkill, player: Player, selected: Player[], selected_cards: integer[]): any @ 判断卡牌和目标是否符合技能限制
-// ---@field public can_use? fun(self: CardSkill, player: Player, card: Card, extra_data: any): any @ 判断主动技能否发动
-// ---@field public on_use? fun(self: CardSkill, room: Room, cardUseEvent: UseCardData): any @ 使用技能时的效果
-// ---@field public fix_targets? fun(self: CardSkill, player: Player, card: Card, extra_data: any): Player[]? @ 设置固定目标
-// ---@field public on_action? fun(self: CardSkill, room: Room, cardUseEvent: UseCardData, finished: boolean): any  卡牌额外效果（卡牌效果执行前或执行后生效）
-// ---@field public about_to_effect? fun(self: CardSkill, room: Room, effect: CardEffectData): boolean? @ 生效前判断，返回true则取消效果
-// ---@field public on_effect? fun(self: CardSkill, room: Room, effect: CardEffectData): any @ 卡牌效果
-// ---@field public on_nullified? fun(self: CardSkill, room: Room, effect: CardEffectData): any @ (仅用于延时锦囊)被抵消时执行内容
-// ---@field public offset_func? fun(self: CardSkill, room: Room, effect: CardEffectData): any @ 卡牌生效前，询问抵消（默认杀询问闪，锦囊询问无懈）
-// ---@field public prompt? string|fun(self: ActiveSkill, player: Player, selected_cards: integer[], selected_targets: Player[], extra_data: any): string @ 提示信息
-// ---@field public target_tip? fun(self: ActiveSkill, player: Player, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, selectable: boolean, extra_data: any): string|TargetTipDataSpec? @ 目标提示
+  // ---@class CardSkillSpec: UsableSkillSpec
+  // ---@field public mod_target_filter? fun(self: ActiveSkill, player: Player, to_select: Player, selected: Player[], card: Card, extra_data: any): any @ 判定目标是否合法（例如不能杀自己，火攻无手牌目标）
+  // ---@field public target_filter? fun(self: CardSkill, player: Player?, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, extra_data: any): any @ 判定目标能否选择
+  // ---@field public feasible? fun(self: CardSkill, player: Player, selected: Player[], selected_cards: integer[]): any @ 判断卡牌和目标是否符合技能限制
+  // ---@field public can_use? fun(self: CardSkill, player: Player, card: Card, extra_data: any): any @ 判断主动技能否发动
+  // ---@field public on_use? fun(self: CardSkill, room: Room, cardUseEvent: UseCardData): any @ 使用技能时的效果
+  // ---@field public fix_targets? fun(self: CardSkill, player: Player, card: Card, extra_data: any): Player[]? @ 设置固定目标
+  // ---@field public on_action? fun(self: CardSkill, room: Room, cardUseEvent: UseCardData, finished: boolean): any  卡牌额外效果（卡牌效果执行前或执行后生效）
+  // ---@field public about_to_effect? fun(self: CardSkill, room: Room, effect: CardEffectData): boolean? @ 生效前判断，返回true则取消效果
+  // ---@field public on_effect? fun(self: CardSkill, room: Room, effect: CardEffectData): any @ 卡牌效果
+  // ---@field public on_nullified? fun(self: CardSkill, room: Room, effect: CardEffectData): any @ (仅用于延时锦囊)被抵消时执行内容
+  // ---@field public offset_func? fun(self: CardSkill, room: Room, effect: CardEffectData): any @ 卡牌生效前，询问抵消（默认杀询问闪，锦囊询问无懈）
+  // ---@field public prompt? string|fun(self: ActiveSkill, player: Player, selected_cards: integer[], selected_targets: Player[], extra_data: any): string @ 提示信息
+  // ---@field public target_tip? fun(self: ActiveSkill, player: Player, to_select: Player, selected: Player[], selected_cards: integer[], card?: Card, selectable: boolean, extra_data: any): string|TargetTipDataSpec? @ 目标提示
 
   {
     id: 'cardskill',
@@ -1200,7 +1200,7 @@ export const effectTypes = [
     template: {
       methods: [
         {
-          name:'mod_target_filter',
+          name: 'mod_target_filter',
           description: '判定目标是否合法（例如不能杀自己，火攻无手牌目标）',
           type: 'client',
           params: [
@@ -1220,7 +1220,7 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
@@ -1259,12 +1259,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
@@ -1298,12 +1298,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             }
@@ -1343,7 +1343,7 @@ export const effectTypes = [
         {
           name: 'on_use',
           description: '使用技能时的效果',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1396,7 +1396,7 @@ export const effectTypes = [
         {
           name: 'on_action',
           description: '卡牌额外效果（卡牌效果执行前或执行后生效）',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1425,7 +1425,7 @@ export const effectTypes = [
         {
           name: 'about_to_effect',
           description: '生效前判断，返回true则取消效果',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1449,7 +1449,7 @@ export const effectTypes = [
         {
           name: 'on_effect',
           description: '卡牌效果',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1473,7 +1473,7 @@ export const effectTypes = [
         {
           name: 'on_nullified',
           description: '(仅用于延时锦囊)被抵消时执行内容',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1497,7 +1497,7 @@ export const effectTypes = [
         {
           name: 'offset_func',
           description: '卡牌生效前，询问抵消（默认杀询问闪，锦囊询问无懈）',
-          type: 'client',
+          type: 'server',
           params: [
             {
               name: 'self',
@@ -1529,17 +1529,17 @@ export const effectTypes = [
               type: 'ActiveSkill'
             },
             {
-              name: 'player', 
+              name: 'player',
               message: '相关角色',
               type: 'Player'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
             {
-              name:'selected_targets',
+              name: 'selected_targets',
               message: '已选目标',
               type: 'Player[]'
             },
@@ -1549,7 +1549,7 @@ export const effectTypes = [
               type: 'any'
             }
           ],
-          ret:'string',
+          ret: 'string',
           blockData: null
         },
         {
@@ -1573,12 +1573,12 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
@@ -1588,7 +1588,7 @@ export const effectTypes = [
               type: 'Card?'
             },
             {
-              name:'selectable',
+              name: 'selectable',
               message: '是否可选',
               type: 'boolean'
             },
@@ -1597,24 +1597,24 @@ export const effectTypes = [
               message: '额外数据',
               type: 'any'
             }
-          ],          
-          ret:'string|TargetTipDataSpec?',
+          ],
+          ret: 'string|TargetTipDataSpec?',
           blockData: null
         }
       ]
     }
   },
 
-// ---@class ViewAsSkillSpec: UsableSkillSpec
-// ---@field public card_filter? fun(self: ViewAsSkill, player: Player, to_select: integer, selected: integer[]): any @ 判断卡牌能否选择
-// ---@field public view_as fun(self: ViewAsSkill, player: Player, cards: integer[]): Card? @ 判断转化为什么牌
-// ---@field public enabled_at_play? fun(self: ViewAsSkill, player: Player): any @ 判断是否可以使用
-// ---@field public enabled_at_response? fun(self: ViewAsSkill, player: Player, response: boolean): any @ 判断是否可以可以响应
-// ---@field public before_use? fun(self: ViewAsSkill, player: ServerPlayer, use: UseCardDataSpec): string? @ 使用/打出前执行的内容，返回字符串则取消此次使用，返回技能名则在本次询问中禁止使用此技能
-// ---@field public after_use? fun(self: ViewAsSkill, player: ServerPlayer, use: UseCardData | RespondCardData): string? @ 使用/打出此牌后执行的内容
-// ---@field public prompt? string|fun(self: ViewAsSkill, player: Player, selected_cards: integer[], selected: Player[]): string @ 使用时的提示信息
-// ---@field public interaction? fun(self: ViewAsSkill, player: Player): table? @ 选项框
-// ---@field public enabled_at_nullification? fun(self: ViewAsSkill, player: Player, data: CardEffectData): boolean? @ 判断一张牌是否能被此技能转化无懈来响应
+  // ---@class ViewAsSkillSpec: UsableSkillSpec
+  // ---@field public card_filter? fun(self: ViewAsSkill, player: Player, to_select: integer, selected: integer[]): any @ 判断卡牌能否选择
+  // ---@field public view_as fun(self: ViewAsSkill, player: Player, cards: integer[]): Card? @ 判断转化为什么牌
+  // ---@field public enabled_at_play? fun(self: ViewAsSkill, player: Player): any @ 判断是否可以使用
+  // ---@field public enabled_at_response? fun(self: ViewAsSkill, player: Player, response: boolean): any @ 判断是否可以可以响应
+  // ---@field public before_use? fun(self: ViewAsSkill, player: ServerPlayer, use: UseCardDataSpec): string? @ 使用/打出前执行的内容，返回字符串则取消此次使用，返回技能名则在本次询问中禁止使用此技能
+  // ---@field public after_use? fun(self: ViewAsSkill, player: ServerPlayer, use: UseCardData | RespondCardData): string? @ 使用/打出此牌后执行的内容
+  // ---@field public prompt? string|fun(self: ViewAsSkill, player: Player, selected_cards: integer[], selected: Player[]): string @ 使用时的提示信息
+  // ---@field public interaction? fun(self: ViewAsSkill, player: Player): table? @ 选项框
+  // ---@field public enabled_at_nullification? fun(self: ViewAsSkill, player: Player, data: CardEffectData): boolean? @ 判断一张牌是否能被此技能转化无懈来响应
 
 
   {
@@ -1644,7 +1644,7 @@ export const effectTypes = [
               type: 'integer'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选卡牌',
               type: 'integer[]'
             }
@@ -1711,7 +1711,7 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'response',
+              name: 'response',
               message: '是否响应',
               type: 'boolean'
             }
@@ -1740,7 +1740,7 @@ export const effectTypes = [
               type: 'UseCardDataSpec'
             }
           ],
-          ret:'string?',
+          ret: 'string?',
           blockData: null
         },
         {
@@ -1764,7 +1764,7 @@ export const effectTypes = [
               type: 'UseCardData | RespondCardData'
             }
           ],
-          ret:'string?',
+          ret: 'string?',
           blockData: null
         },
         {
@@ -1783,17 +1783,17 @@ export const effectTypes = [
               type: 'Player'
             },
             {
-              name:'selected_cards',
+              name: 'selected_cards',
               message: '已选卡牌',
               type: 'integer[]'
             },
             {
-              name:'selected',
+              name: 'selected',
               message: '已选角色',
               type: 'Player[]'
             }
           ],
-          ret:'string',
+          ret: 'string',
           blockData: null
         },
         {
@@ -1805,19 +1805,17 @@ export const effectTypes = [
               name: 'self',
               message: '本技能',
               type: 'ViewAsSkill'
-            },
-            {
+            }, {
               name: 'player',
               message: '相关角色',
               type: 'Player'
-            }
-          ],
+            }],
           ret: 'table?',
           blockData: null
         },
         {
           name: 'enabled_at_nullification',
-          description: '判断一张牌是否能被此技能转化为无懈来进行响应',
+          description: '判断一张牌是否能被此技能转化无懈来响应',
           type: 'client',
           params: [
             {
