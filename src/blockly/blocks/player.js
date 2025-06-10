@@ -147,7 +147,6 @@ export default [
     output: null,
     inputsInline: true,
   },
-
   // getCardIds
   // hasDelayedTrick
   // getPile
