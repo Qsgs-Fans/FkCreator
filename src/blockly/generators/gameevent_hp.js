@@ -41,7 +41,7 @@ export default () => {
       code += `  recoverBy = ${source},\n`;
     }
     if (block.getInput('SOURCE_CARD')) {
-      const source = generator.valueToCode(block, 'SOURCE', Order.ATOMIC) || 'nil';
+      const source = generator.valueToCode(block, 'SOURCE_CARD', Order.ATOMIC) || 'nil';
       code += `  card = ${source},\n`;
     }
 
