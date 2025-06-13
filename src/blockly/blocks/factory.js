@@ -11,6 +11,7 @@ export function createConfigurableBlock({
   args,
   colour,
   tooltip,
+  output,
   optionalFields = [], // [{ type: 'source', message: '来源', inputType: 'input_value', name: 'SOURCE', check: 'Player' }]
   dropdowns = {} // e.g. { DAMAGE_TYPE: [['普', 'normal'], ['火', 'fire']] }
 }) {
@@ -19,12 +20,18 @@ export function createConfigurableBlock({
     message0: message,
     args0: args,
     inputsInline: false,
-    previousStatement: null,
-    nextStatement: null,
+    // previousStatement: null,
+    // nextStatement: null,
     colour,
     tooltip,
+    output,
     helpUrl: ''
   };
+
+  if (!output) {
+    blockJson.previousStatement = null;
+    blockJson.nextStatement = null;
+  }
 
   const mutatorMixin = {
     mutationToDom() {
