@@ -12,7 +12,7 @@ Blockly.Blocks['card_property_read'] = {
             ['点数', 'number'],
             ['花色', 'suit'],
             ['名称', 'name'],
-            ['真实名称', 'truename']
+            ['真实名称', 'trueName']
           ],
           this.updateOutputType.bind(this)
         ),
