@@ -40,8 +40,8 @@ export default () => {
     const pro = generator.valueToCode(block, 'PRO', Order.CONCATENATION) || '{nil}';
     const con = generator.valueToCode(block, 'CON', Order.CONCATENATION) || '{nil}';
 
-    let code = `{\n  table.unpack(${pro})`
-    if (con != '{nil}') {
+    let code = `{\n${pro.slice(1, -1)}`
+    if (con != 'nil') {
       code += `,\n  neg = ${con}`
     }
     code += `\n}`
