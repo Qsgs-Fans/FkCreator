@@ -37,15 +37,24 @@ export default () => {
   };
 
   luaGenerator.forBlock['matcher_array'] = function (block, generator) {
-    const pro = generator.valueToCode(block, 'PRO', Order.CONCATENATION) || '{nil}';
-    const con = generator.valueToCode(block, 'CON', Order.CONCATENATION) || '{nil}';
+    const pro = generator.valueToCode(block, 'PRO', Order.CONCATENATION) || '{}';
+    const con = generator.valueToCode(block, 'CON', Order.CONCATENATION) || 'nil';
 
-    let code = `{\n${pro.slice(1, -1)}`
-    if (con != 'nil') {
-      code += `,\n  neg = ${con}`
-    }
-    code += `\n}`
+    const functionName = generator.provideFunction_(
+      'create_matcher_array',
+      `
+function ${generator.FUNCTION_NAME_PLACEHOLDER_}(pro, con)
+  local t = {}
+    for _, item in ipairs(pro) do
+      table.insert(t, item)
+    end
+  t.neg = con
+  return t
+end
+`,
+    )
 
+    const code = functionName + '(' + pro + ', ' + con + ')';
     return code;
   };
 };
