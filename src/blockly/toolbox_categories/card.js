@@ -8,6 +8,18 @@ export default {
       kind: 'block'
     },
     {
+      type: 'card_property_func',
+      kind: 'block'
+    },
+    {
+      type: 'card_match_pattern',
+      kind: 'block'
+    },
+    {
+      type: 'card_get_mark',
+      kind: 'block'
+    },
+    {
       type: 'get_card_by_id',
       kind: 'block',
       inputs: {
@@ -42,6 +54,32 @@ export default {
           }
         },
       }
-    }
+    },
+    {
+      type: 'print_card',
+      kind: 'block',
+      inputs: {
+        NUMBER: {
+          shadow: {
+            type: 'math_number',
+            fields: {
+              NUM: 7
+            }
+          }
+        },
+        NAME: {
+          shadow: {
+            type: 'text',
+            fields: {
+              TEXT: ''
+            }
+          }
+        },
+      }
+    },
+    {
+      type: 'card_add_subcards',
+      kind: 'block'
+    },
   ]
 };

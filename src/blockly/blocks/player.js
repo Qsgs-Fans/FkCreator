@@ -224,8 +224,8 @@ Blockly.Blocks['player_prohibited_card'] = {
       ),
       'TYPE')
       .appendField('卡牌');
-    this.appendDummyInput()
 
+    this.setInputsInline(true);
     this.setColour(230);
     this.setTooltip('获得角色是否被禁止对某牌使用某个操作');
     this.setHelpUrl('');
