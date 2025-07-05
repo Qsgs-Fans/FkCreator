@@ -10,6 +10,16 @@ export default {
     {
       type: 'get_card_by_id',
       kind: 'block',
+      inputs: {
+        ID: {
+          shadow: {
+            type: 'math_number',
+            fields: {
+              NUM: 1
+            }
+          }
+        },
+      }
     },
     {
       type: 'clone_card',

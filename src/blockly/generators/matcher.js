@@ -43,7 +43,7 @@ export default () => {
     const functionName = generator.provideFunction_(
       'create_matcher_array',
       `
-function ${generator.FUNCTION_NAME_PLACEHOLDER_}(pro, con)
+local function ${generator.FUNCTION_NAME_PLACEHOLDER_}(pro, con)
   local t = {}
     for _, item in ipairs(pro) do
       table.insert(t, item)

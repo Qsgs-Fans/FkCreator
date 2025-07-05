@@ -64,7 +64,9 @@ Blockly.Blocks['player_property_read'] = {
       'faceup': 'Boolean',
       'chained': 'Boolean',
 
-      'id': 'Number'
+      'id': 'Number',
+
+      'skills': 'Array',
     };
     const outputType = typeMap[newValue] || null;
     this.setOutput(true, outputType);
@@ -95,7 +97,7 @@ Blockly.Blocks['player_property_read_by_fn'] = {
             ['手牌上限', 'getMaxCards'],
             ['攻击范围', 'getAttackRange'],
 
-            // ['所有武将技能名列表', 'getSkillNameList'],
+            ['所有武将技能名列表', 'getSkillNameList'],
           ],
           this.updateOutputType.bind(this)
         ),
@@ -128,6 +130,8 @@ Blockly.Blocks['player_property_read_by_fn'] = {
       'getHandcardNum': 'Number',
       'getMaxCards': 'Number',
       'getAttackRange': 'Number',
+
+      'getSkillNameList': 'Array',
     };
     const outputType = typeMap[newValue] || null;
     this.setOutput(true, outputType);
@@ -198,6 +202,32 @@ Blockly.Blocks['player_used_times'] = {
 
     this.setColour(230);
     this.setTooltip('获得角色在某时机使用了多少次某个牌名或技能');
+    this.setHelpUrl('');
+
+    this.setOutput(true, 'Number');
+  },
+};
+
+Blockly.Blocks['player_prohibited_card'] = {
+  init: function () {
+    this.appendValueInput('PLAYER').setCheck('Player').appendField('角色');
+
+    this.appendValueInput('CARD').setCheck('Card')
+      .appendField('是否被禁止')
+      .appendField(
+      new Blockly.FieldDropdown(
+        [
+          ['使用', 'Use'],
+          ['打出', 'Responed'],
+          ['弃置', 'Discard'],
+        ],
+      ),
+      'TYPE')
+      .appendField('卡牌');
+    this.appendDummyInput()
+
+    this.setColour(230);
+    this.setTooltip('获得角色是否被禁止对某牌使用某个操作');
     this.setHelpUrl('');
 
     this.setOutput(true, 'Number');
@@ -277,9 +307,6 @@ export default [
     output: 'Boolean',
     inputsInline: true,
   },
-  // usedCardTimes
-  // usedSkillTimes
-  // hasSkill
 
   // 未完待续...
 ];

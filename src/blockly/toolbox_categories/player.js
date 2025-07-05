@@ -30,6 +30,10 @@ export default {
       }
     },
     {
+      type: 'player_prohibited_card',
+      kind: 'block'
+    },
+    {
       type: 'player_has_skill',
       kind: 'block',
       inputs: {

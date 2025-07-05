@@ -34,6 +34,18 @@ export default () => {
     return [`${player}:getCardIds(${flag})`, Order.ATOMIC];
   };
 
+  luaGenerator.forBlock['player_prohibited_card'] = function (block, generator) {
+    const player = generator.valueToCode(block, 'PLAYER', Order.ATOMIC) || 'nil';
+    const type = generator.getVariableName(block.getFieldValue('TYPE')) || 'Use';
+    const card = generator.valueToCode(block, 'CARD', Order.ATOMIC) || 'nil';
+
+    if (player == 'nil' || card == 'nil') {
+      throw new Error("生成失败！必须指定一名角色和一个卡牌。");
+    }
+
+    return [`${player}:prohibit${type}(${card})`, Order.ATOMIC];
+  };
+
   luaGenerator.forBlock['player_used_times'] = function (block, generator) {
     const player = generator.valueToCode(block, 'PLAYER', Order.ATOMIC) || 'nil';
     const history = generator.getVariableName(block.getFieldValue('HISTORY')) || 'HistoryTurn';
