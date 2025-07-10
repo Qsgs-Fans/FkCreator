@@ -37,14 +37,6 @@ export default {
       type: 'clone_card',
       kind: 'block',
       inputs: {
-        NUMBER: {
-          shadow: {
-            type: 'math_number',
-            fields: {
-              NUM: 7
-            }
-          }
-        },
         NAME: {
           shadow: {
             type: 'text',
@@ -59,14 +51,6 @@ export default {
       type: 'print_card',
       kind: 'block',
       inputs: {
-        NUMBER: {
-          shadow: {
-            type: 'math_number',
-            fields: {
-              NUM: 7
-            }
-          }
-        },
         NAME: {
           shadow: {
             type: 'text',
@@ -75,6 +59,20 @@ export default {
             }
           }
         },
+      }
+    },
+    {
+      type: 'draw_n_cards',
+      kind: 'block',
+      inputs: {
+        NUMBER: {
+          shadow: {
+            type: 'math_number',
+            fields: {
+              NUM: 1
+            }
+          }
+        }
       }
     },
     {

@@ -6,6 +6,7 @@ import tb_list from '../toolbox_categories/list';
 
 import tb_card from '../toolbox_categories/card';
 import tb_player from '../toolbox_categories/player';
+import tb_general from '../toolbox_categories/general';
 import tb_matcher from '../toolbox_categories/matcher';
 
 import tb_gameflow_hp from '../toolbox_categories/gameevent_hp';
@@ -41,6 +42,7 @@ export default {
     { kind: 'sep' },
     tb_card,
     tb_player,
+    tb_general,
     tb_matcher,
     { kind: 'sep' },
     tb_gameflow_hp,

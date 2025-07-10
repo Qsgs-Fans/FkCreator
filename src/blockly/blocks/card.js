@@ -134,9 +134,13 @@ Blockly.Blocks['card_property_func'] = {
 
 Blockly.Blocks['clone_card'] = {
   init: function () {
+  
+    this.appendValueInput('NAME')
+        .setCheck('String')
+        .appendField('一张虚拟的');
 
     this.appendDummyInput('PROPERTY_INPUT')
-      .appendField('一张')
+      .appendField('花色')
       .appendField(
         new Blockly.FieldDropdown(
           [
@@ -151,13 +155,10 @@ Blockly.Blocks['clone_card'] = {
       );
 
     this.appendValueInput('NUMBER')
-        .setCheck('Number');
-  
-    this.appendValueInput('NAME')
-        .setCheck('String')
-        .appendField('的虚拟');
+        .setCheck('Number')
+        .appendField('点数');
 
-    this.setInputsInline(true);
+    this.setInputsInline(false);
     this.setColour(230);
     this.setTooltip('根据牌名、花色、点数，复制一张牌');
     this.setHelpUrl('');
@@ -169,9 +170,13 @@ Blockly.Blocks['clone_card'] = {
 
 Blockly.Blocks['print_card'] = {
   init: function () {
+  
+    this.appendValueInput('NAME')
+        .setCheck('String')
+        .appendField('一张额外的');
 
     this.appendDummyInput('PROPERTY_INPUT')
-      .appendField('一张')
+      .appendField('花色')
       .appendField(
         new Blockly.FieldDropdown(
           [
@@ -186,13 +191,10 @@ Blockly.Blocks['print_card'] = {
       );
 
     this.appendValueInput('NUMBER')
-        .setCheck('Number');
-  
-    this.appendValueInput('NAME')
-        .setCheck('String')
-        .appendField('的额外');
+        .setCheck('Number')
+        .appendField('点数');
 
-    this.setInputsInline(true);
+    this.setInputsInline(false);
     this.setColour(230);
     this.setTooltip('根据牌名、花色、点数，制造一张拥有ID的额外牌');
     this.setHelpUrl('');
@@ -268,5 +270,21 @@ export default [
     colour: 230,
     tooltip: '判断一张卡牌是否匹配某个匹配器',
     output: 'Boolean',
+  },
+  {
+    type: 'draw_n_cards',
+    message0: '从%1抽%2张牌',
+    args0: [
+      { type: 'field_dropdown', name: 'POSITION',
+        options: [
+          ["牌堆顶", "top"],
+          ["牌堆底", "bottom"]
+        ]
+      },
+      { type: 'input_value', name: 'NUMBER', check: 'Number' },
+    ],
+    colour: 230,
+    tooltip: '从房间的牌堆抽取N张牌，返回这些牌的ID',
+    output: 'Array',
   },
 ];

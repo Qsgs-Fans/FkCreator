@@ -230,7 +230,7 @@ Blockly.Blocks['player_prohibited_card'] = {
     this.setTooltip('获得角色是否被禁止对某牌使用某个操作');
     this.setHelpUrl('');
 
-    this.setOutput(true, 'Number');
+    this.setOutput(true, 'Boolean');
   },
 };
 
@@ -307,6 +307,5 @@ export default [
     output: 'Boolean',
     inputsInline: true,
   },
-
   // 未完待续...
 ];

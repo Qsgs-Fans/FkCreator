@@ -89,6 +89,17 @@ export default () => {
       throw new Error("生成失败！必须指定一个虚拟牌和ID数组。");
     }
 
-    return `${card}:add${type}(${ids})`;
+    return `${card}:add${type}(${ids})\n`;
+  };
+
+  luaGenerator.forBlock['draw_n_cards'] = function (block, generator) {
+    const pos = generator.getVariableName(block.getFieldValue('POSITION')) || 'top';
+    const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC) || 'nil';
+
+    if (number == 'nil') {
+      throw new Error("生成失败！必须指定抽取数量。");
+    }
+
+    return [`room:getNCards(${number}, "${pos}")`, Order.ATOMIC];
   };
 };
