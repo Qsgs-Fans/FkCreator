@@ -5,6 +5,7 @@ import gen_player from './player';
 import gen_card from './card';
 import gen_general from './general';
 import gen_matcher from './matcher';
+import gen_predefined from './predefined';
 
 export default () => {
   gen_basic();
@@ -14,4 +15,5 @@ export default () => {
   gen_card();
   gen_general();
   gen_matcher();
+  gen_predefined();
 };

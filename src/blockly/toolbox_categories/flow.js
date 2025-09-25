@@ -1,6 +1,6 @@
 export default {
   kind: 'category',
-  name: '分支与循环',
+  name: '流程控制',
   categorystyle: 'logic_category',
   contents: [
     {

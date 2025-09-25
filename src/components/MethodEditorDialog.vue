@@ -38,6 +38,10 @@ import { copyTextToClip } from '@/utils/web.js';
 // 当需要弹出param工具栏时，都临时创建一个block类别，然后将那个block放进去
 const methodParamsCallback = function (workspace) {
   const blockList = [];
+  blockList.push({
+    kind: 'block',
+    type: 'simple_return',
+  });
   workspace.localMethod.params.forEach((v) => {
     const blkType = 'param_get_' + v.name;
     blockList.push({

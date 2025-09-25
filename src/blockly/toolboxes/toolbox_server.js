@@ -12,6 +12,9 @@ import tb_matcher from '../toolbox_categories/matcher';
 import tb_gameflow_hp from '../toolbox_categories/gameevent_hp';
 import tb_gameflow_judge from '../toolbox_categories/gameevent_judge';
 
+import tb_predefined from '../toolbox_categories/predefined';
+import { variables } from 'blockly/blocks';
+
 export default {
   kind: 'categoryToolbox',
   contents: [
@@ -21,16 +24,17 @@ export default {
     tb_text,
     tb_list,
     { kind: 'sep' },
+    tb_predefined,
     {
       kind: 'category',
-      name: '该方法的变量',
+      name: '该方法的变量与返回',
       custom: 'METHOD_PARAMS',
       categorystyle: 'variable_category'
     },
     {
       kind: 'category',
       name: '自定义变量',
-      custom: 'VARIABLE_DYNAMIC',
+      custom: 'VARIABLE',
       categorystyle: 'variable_category'
     },
     {

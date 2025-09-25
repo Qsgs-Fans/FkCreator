@@ -31,7 +31,7 @@ export default () => {
       throw new Error("生成失败！必须指定一名角色和一个区域字段。");
     }
 
-    return [`${player}:getCardIds(${flag})`, Order.ATOMIC];
+    return [`${player}:getCardIds('${flag}')`, Order.ATOMIC];
   };
 
   luaGenerator.forBlock['player_prohibited_card'] = function (block, generator) {

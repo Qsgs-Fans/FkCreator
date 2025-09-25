@@ -86,6 +86,9 @@ const generateSkillCode = (skill) => {
   ** 关于技能的信息 **
 --]]
 
+-- Blockly不支持local变量。。不能污染全局作用域
+local _ENV = setmetatable({}, { __index = _ENV })
+
 local _skill_val = fk.CreateSkill {
   name = "${skill.internal_name}",
   tags = {${skill.tags.join(", ")}},
