@@ -132,6 +132,7 @@ export const useModStore = defineStore('mod', () => {
     try {
       await exportToLua(currentMod.value);
     } catch (error) {
+      console.error(error); // FIXME: 神秘报错机制导致压根无法捕获到错误
       await ElMessageBox.alert('导出失败: ' + error.message);
     }
     await ElMessageBox.alert(`项目【${currentMod.value.name}】已导出Lua`, '导出成功', {

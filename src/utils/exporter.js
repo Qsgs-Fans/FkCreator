@@ -63,7 +63,7 @@ Fk:loadTranslationTable { ["${pkg.internal_name}"] = "${pkg.name}" }\n\n`;
   return luaCode;
 };
 
-const defineParamBlocks = (params) => {
+const defineParamBlocks = (params) => { // FIXME: 这个函数和MethodEditorDialog.vue里有重复
   params.forEach((v) => {
     const blkType = 'param_get_' + v.name;
     Blockly.defineBlocksWithJsonArray([
@@ -74,7 +74,11 @@ const defineParamBlocks = (params) => {
         colour: 112 // TODO 颜色换个好看点的
       }
     ]);
-    luaGenerator.forBlock[blkType] = () => [v.name, Order.ATOMIC];
+    if (v.generator) {
+      luaGenerator.forBlock[blkType] = () => [v.generator, Order.ATOMIC];
+    } else {
+      luaGenerator.forBlock[blkType] = () => [v.name, Order.ATOMIC];
+    }
   });
 };
 
@@ -91,7 +95,7 @@ local _ENV = setmetatable({}, { __index = _ENV })
 
 local _skill_val = fk.CreateSkill {
   name = "${skill.internal_name}",
-  tags = {${skill.tags.join(", ")}},
+  tags = {${(skill.tags ?? []).join(", ")}},
 }
 
 Fk:loadTranslationTable {
@@ -104,7 +108,7 @@ Fk:loadTranslationTable {
     effect.methods.forEach((m) => {
       if (!m.blocksState) return;
       luaCode += `  ${m.name} = function(`;
-      luaCode += m.params.map((p) => p.name).join(', ');
+      luaCode += m.params.filter((p) => !p.notParam).map((p) => p.name).join(', ');
       luaCode += ')\n';
       defineParamBlocks(m.params);
 

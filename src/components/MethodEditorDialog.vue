@@ -126,7 +126,11 @@ const initBlockly = () => {
         colour: 112 // TODO 颜色换个好看点的
       }
     ]);
-    luaGenerator.forBlock[blkType] = () => [v.name, Order.ATOMIC];
+    if (v.generator) {
+      luaGenerator.forBlock[blkType] = () => [v.generator, Order.ATOMIC];
+    } else {
+      luaGenerator.forBlock[blkType] = () => [v.name, Order.ATOMIC];
+    }
   });
 
   // 加载已有块

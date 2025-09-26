@@ -1055,17 +1055,44 @@ export const effectTypes = [
             {
               name: 'self',
               message: '本技能',
+              desc: '技能本身',
               type: 'ActiveSkill'
             },
             {
               name: 'room',
               message: '所在房间',
+              desc: '位于服务端的房间对象',
               type: 'Room'
             },
             {
               name: 'skillUseEvent',
               message: '技能使用事件',
+              desc: '本技能的使用信息',
               type: 'SkillUseData'
+            },
+            {
+              name: 'skillFrom',
+              message: '技能发动者',
+              desc: '技能的发动者',
+              type: 'Player',
+              notParam: true,
+              generator: 'skillUseEvent.from'
+            },
+            {
+              name: 'skillTos',
+              message: '技能目标',
+              desc: '技能所指向的目标',
+              type: 'Array',
+              notParam: true,
+              generator: 'skillUseEvent.tos'
+            },
+            {
+              name: 'skillCards',
+              message: '技能卡牌数组',
+              desc: '发动技能时所选择的卡牌',
+              type: 'Array',
+              notParam: true,
+              generator: 'skillUseEvent.cards'
             }
           ],
           ret: 'any',
