@@ -1969,6 +1969,28 @@ export const timingOptions = [
         label: '体力上限改变后'
       }
     ]
+  },
+  {
+    value: 'JudgeEvent',
+    label: '判定相关时机',
+    children: [
+      {
+        value: 'StartJudge',
+        label: '判定开始时'
+      },
+      {
+        value: 'AskForRetrial',
+        label: '判定生效时'
+      },
+      {
+        value: 'FinishRetrial',
+        label: '判定结果生效时'
+      },
+      {
+        value: 'FinishJudge',
+        label: '判定结束时'
+      }
+    ]
   }
 ];
 
@@ -2024,6 +2046,8 @@ const defineTriggerEffectMethods = (p) => {
   ];
 };
 
+// 这些是从原文件中提取的时机数据结构
+// hp.lua
 const DamageEventTemplate = {
   methods: defineTriggerEffectMethods([
     {
@@ -2074,12 +2098,6 @@ const HpChangeEventTemplate = {
       notParam: true
     },
     {
-      name: 'data.prevented',
-      message: '体力变化是否被防止',
-      type: 'Boolean',
-      notParam: true
-    },
-    {
       name: 'data.skillName',
       message: '引起这次体力变化的技能名',
       type: 'String',
@@ -2100,12 +2118,6 @@ const HpLostEventTemplate = {
       name: 'data.num',
       message: '失去体力量',
       type: 'Number',
-      notParam: true
-    },
-    {
-      name: 'data.prevented',
-      message: '失去体力是否被防止',
-      type: 'Boolean',
       notParam: true
     },
     {
@@ -2138,12 +2150,6 @@ const RecoverEventTemplate = {
       notParam: true
     },
     {
-      name: 'data.prevented',
-      message: '体力回复是否被防止',
-      type: 'Boolean',
-      notParam: true
-    },
-    {
       name: 'data.card',
       message: '造成体力回复的卡牌',
       type: 'Card',
@@ -2171,17 +2177,78 @@ const MaxHpEventTemplate = {
       message: '体力上限变化量',
       type: 'Number',
       notParam: true
+    }
+  ])
+};
+
+// judge.lua
+const JudgeEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '判定者',
+      type: 'Player',
+      notParam: true
     },
     {
-      name: 'data.prevented',
-      message: '体力上限变化是否被防止',
-      type: 'Boolean',
+      name: 'data.pattern',
+      message: '判定成功的条件',
+      type: 'String',
+      notParam: true
+    },
+    {
+      name: 'data.reason',
+      message: '判定原因',
+      type: 'String',
+      notParam: true
+    },
+    {
+      name: 'data.Card',
+      message: '当前判定牌',
+      type: 'Card',
+      notParam: true
+    },
+    {
+      name: 'data.results',
+      message: '判定结果',
+      type: 'Array',
       notParam: true
     }
   ])
 };
 
+// pindian.lua
+const PindianEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.from',
+      message: '拼点发起者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.tos',
+      message: '拼点目标',
+      type: 'Array',
+      notParam: true
+    },
+    {
+      name: 'data.reason',
+      message: '拼点原因',
+      type: 'String',
+      notParam: true
+    },
+    {
+      name: 'data.results',
+      message: '拼点结果',
+      type: 'PindianResults', // 需要一个特殊的处理流程……
+      notParam: true
+    },
+  ])
+};
+
 const triggerEffectTemplates = {
+  // hp.lua
   PreDamage: DamageEventTemplate,
   DamageCaused: DamageEventTemplate,
   DetermineDamageCaused: DamageEventTemplate,
@@ -2198,6 +2265,24 @@ const triggerEffectTemplates = {
   HpRecover: RecoverEventTemplate,
   BeforeMaxHpChanged: MaxHpEventTemplate,
   MaxHpChanged: MaxHpEventTemplate,
+  
+  // judge.lua
+  StartJudge: JudgeEventTemplate,
+  AskForRetrial: JudgeEventTemplate,
+  FinishRetrial: JudgeEventTemplate,
+  FinishJudge: JudgeEventTemplate,
+  
+  // pindian.lua
+  StartPindian: PindianEventTemplate,
+  PindianCardsDisplayed: PindianEventTemplate,
+  PindianResultConfirmed: PindianEventTemplate,
+  PindianFinished: PindianEventTemplate,
+  
+  // pindian.lua
+  StartPindian: PindianEventTemplate,
+  PindianCardsDisplayed: PindianEventTemplate,
+  PindianResultConfirmed: PindianEventTemplate,
+  PindianFinished: PindianEventTemplate,
 };
 
 const getTriggerEffectTemplate = (triggerEvent) => {
