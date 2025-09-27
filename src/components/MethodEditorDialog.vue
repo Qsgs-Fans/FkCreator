@@ -4,7 +4,7 @@
       <div class="dialog-header">
         <div class="dialog-title">方法编辑：{{ props.data.name }}</div>
         <div class="method-editor-buttons">
-          <el-button type="primary" @click="testMethod">预览Lua代码</el-button>
+          <el-button v-if="!showSidePreview" type="primary" @click="testMethod">预览Lua代码</el-button>
           <el-button type="primary" @click="saveMethod">保存</el-button>
           <el-button type="warning" plain @click="resetToDefault">清空</el-button>
           <el-button type="danger" @click="closeMethod">关闭</el-button>
@@ -12,7 +12,15 @@
       </div>
     </template>
     <div class="method-editor">
-      <div ref="blocklyDiv" class="blockly-container"></div>
+      <div class="method-left">
+        <div ref="blocklyDiv" class="blockly-container"></div>
+      </div>
+      <div v-if="showSidePreview" class="method-right">
+        <div class="code-preview">
+          <div class="code-preview-header">Lua 预览</div>
+          <pre v-highlight class="code-pre"><code class="lua">{{ code }}</code></pre>
+        </div>
+      </div>
     </div>
     <div class="bottom-info">
       <p>注意：编辑完成后请点击保存按钮以保存修改。</p>
@@ -28,7 +36,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { nextTick, onMounted, ref, toRaw } from 'vue';
+import { nextTick, onMounted, ref, toRaw, onBeforeUnmount } from 'vue';
 import * as Blockly from 'blockly';
 import { luaGenerator, Order } from 'blockly/lua';
 import toolbox_server from '@/blockly/toolboxes/toolbox_server.js';
@@ -75,10 +83,40 @@ const close = () => {
 const localMethod = ref();
 const workspace = ref();
 const blocklyDiv = ref();
+const showSidePreview = ref(false);
+
+// check viewport aspect ratio and enable side preview when width/height > 3/4
+function checkAspectRatio () {
+  try {
+    const ratio = window.innerWidth / window.innerHeight;
+    const should = ratio > (4 / 3);
+    if (should && !showSidePreview.value) {
+      showSidePreview.value = true;
+      // generate initial code
+      try {
+        const ws = toRaw(workspace.value);
+        if (ws) code.value = luaGenerator.workspaceToCode(ws);
+      } catch (e) {}
+    } else if (!should && showSidePreview.value) {
+      showSidePreview.value = false;
+    }
+  } catch (e) {
+    // ignore in non-browser env
+  }
+}
+
 onMounted(() => {
   nextTick(() => {
     initBlockly();
   });
+  // initial check
+  checkAspectRatio();
+  window.addEventListener('resize', checkAspectRatio);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkAspectRatio);
+  const rawWorkspace = toRaw(workspace.value);
+  if (rawWorkspace) rawWorkspace.removeChangeListener(onWorkspaceChangeForCode);
 });
 const closeMethod = () => {
   ElMessageBox.confirm('关闭编辑页面会导致未保存数据丢失，是否确认关闭？', '提示', {
@@ -136,10 +174,26 @@ const initBlockly = () => {
 
   // 加载已有块
   workspace.value.addChangeListener(onBlocklyChange);
+  // also add a workspace change listener to update code preview when side preview is active
+  const ws2 = toRaw(workspace.value);
+  if (ws2) {
+    ws2.addChangeListener(onWorkspaceChangeForCode);
+  }
   if (localMethod.value.blocksState) {
-    Blockly.serialization.workspaces.load(localMethod.value.blocksState, rawWorkspace);
+    Blockly.serialization.workspaces.load(localMethod.value.blocksState, ws2);
   } else {
     addDefaultStartBlock();
+  }
+};
+
+// update code when workspace changes (for side preview)
+const onWorkspaceChangeForCode = (event) => {
+  // debounce not implemented - small projects should be fine; could be optimized
+  try {
+    const ws3 = toRaw(workspace.value);
+    code.value = luaGenerator.workspaceToCode(ws3);
+  } catch (e) {
+    // ignore generation errors for live preview
   }
 };
 const addDefaultStartBlock = () => {
@@ -169,7 +223,10 @@ const testMethod = async () => {
   const rawWorkspace = toRaw(workspace.value);
   try {
     code.value = luaGenerator.workspaceToCode(rawWorkspace);
-    showCodeDialog.value = true;
+    // 被拉到宽屏时就不需要预览窗口了
+    if (!showSidePreview.value) {
+      showCodeDialog.value = true;
+    }
   } catch (error) {
     ElMessageBox.alert('预览lua失败: ' + error.message, { type: 'error' });
   }
@@ -217,6 +274,36 @@ const resetToDefault = () => {
   width: 100%;
   border: 1.4px solid #5f92cd;
   border-radius: var(--el-border-radius-base);
+}
+
+.method-editor {
+  display: flex;
+  gap: 12px;
+}
+.method-left {
+  flex: 1 1 auto;
+}
+.method-right {
+  width: 35%;
+}
+.code-preview {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 168px);
+}
+.code-preview-header {
+  padding: 8px 10px;
+  background: var(--selected-background-color);
+  border-radius: var(--el-border-radius-base);
+  margin-bottom: 8px;
+}
+.code-pre {
+  overflow: auto;
+  flex: 1 1 auto;
+  background: var(--selected-background-color);
+  padding: 12px;
+  border-radius: var(--el-border-radius-base);
+  color: var(--text-color-title);
 }
 
 :deep(.injectionDiv) {
