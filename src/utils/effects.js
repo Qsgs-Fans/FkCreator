@@ -1881,12 +1881,92 @@ export const timingOptions = [
     label: '伤害相关时机',
     children: [
       {
+        value: 'PreDamage',
+        label: '伤害结算开始前'
+      },
+      {
+        value: 'DamageCaused',
+        label: '造成伤害时'
+      },
+      {
+        value: 'DetermineDamageCaused',
+        label: '造成定量伤害时'
+      },
+      {
+        value: 'DamageInflicted',
+        label: '受到伤害时'
+      },
+      {
+        value: 'DetermineDamageInflicted',
+        label: '受到定量伤害时'
+      },
+      {
         value: 'Damage',
         label: '造成伤害后'
       },
       {
         value: 'Damaged',
         label: '受到伤害后'
+      },
+      {
+        value: 'DamageFinished',
+        label: '伤害结算结束后'
+      }
+    ]
+  },
+  {
+    value: 'HpChangeEvent',
+    label: '改变体力值相关时机',
+    children: [
+      {
+        value: 'BeforeHpChanged',
+        label: '改变体力值前'
+      },
+      {
+        value: 'HpChanged',
+        label: '改变体力值后'
+      }
+    ]
+  },
+  {
+    value: 'HpLostEvent',
+    label: '失去体力相关时机',
+    children: [
+      {
+        value: 'PreHpLost',
+        label: '失去体力前'
+      },
+      {
+        value: 'HpLost',
+        label: '失去体力后'
+      }
+    ]
+  },
+  {
+    value: 'RecoverEvent',
+    label: '回复体力相关时机',
+    children: [
+      {
+        value: 'PreHpRecover',
+        label: '回复体力前'
+      },
+      {
+        value: 'HpRecover',
+        label: '回复体力后'
+      }
+    ]
+  },
+  {
+    value: 'MaxHpEvent',
+    label: '体力上限改变相关时机',
+    children: [
+      {
+        value: 'PreHpRecover',
+        label: '体力上限改变前'
+      },
+      {
+        value: 'HpRecover',
+        label: '体力上限改变后'
       }
     ]
   }
@@ -1979,9 +2059,145 @@ const DamageEventTemplate = {
   ])
 };
 
+const HpChangeEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '体力变化者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.num',
+      message: '体力变化量',
+      type: 'Number',
+      notParam: true
+    },
+    {
+      name: 'data.prevented',
+      message: '体力变化是否被防止',
+      type: 'Boolean',
+      notParam: true
+    },
+    {
+      name: 'data.skillName',
+      message: '引起这次体力变化的技能名',
+      type: 'String',
+      notParam: true
+    }
+  ])
+};
+
+const HpLostEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '失去体力者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.num',
+      message: '失去体力量',
+      type: 'Number',
+      notParam: true
+    },
+    {
+      name: 'data.prevented',
+      message: '失去体力是否被防止',
+      type: 'Boolean',
+      notParam: true
+    },
+    {
+      name: 'data.skillName',
+      message: '引起这次失去体力的技能名',
+      type: 'String',
+      notParam: true
+    }
+  ])
+};
+
+const RecoverEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '体力回复者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.num',
+      message: '体力回复量',
+      type: 'Number',
+      notParam: true
+    },
+    {
+      name: 'data.recoverBy',
+      message: '体力回复的来源',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.prevented',
+      message: '体力回复是否被防止',
+      type: 'Boolean',
+      notParam: true
+    },
+    {
+      name: 'data.card',
+      message: '造成体力回复的卡牌',
+      type: 'Card',
+      notParam: true
+    },
+    {
+      name: 'data.skillName',
+      message: '引起这次体力回复的技能名',
+      type: 'String',
+      notParam: true
+    }
+  ])
+};
+
+const MaxHpEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '体力上限改变者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.num',
+      message: '体力上限变化量',
+      type: 'Number',
+      notParam: true
+    },
+    {
+      name: 'data.prevented',
+      message: '体力上限变化是否被防止',
+      type: 'Boolean',
+      notParam: true
+    }
+  ])
+};
+
 const triggerEffectTemplates = {
+  PreDamage: DamageEventTemplate,
+  DamageCaused: DamageEventTemplate,
+  DetermineDamageCaused: DamageEventTemplate,
+  DamageInflicted: DamageEventTemplate,
+  DetermineDamageInflicted: DamageEventTemplate,
   Damage: DamageEventTemplate,
-  Damaged: DamageEventTemplate
+  Damaged: DamageEventTemplate,
+  DamageFinished: DamageEventTemplate,
+  BeforeHpChanged: HpChangeEventTemplate,
+  HpChanged: HpChangeEventTemplate,
+  PreHpLost: HpLostEventTemplate,
+  HpLost: HpLostEventTemplate,
+  PreHpRecover: RecoverEventTemplate,
+  HpRecover: RecoverEventTemplate,
+  BeforeMaxHpChanged: MaxHpEventTemplate,
+  MaxHpChanged: MaxHpEventTemplate,
 };
 
 const getTriggerEffectTemplate = (triggerEvent) => {
