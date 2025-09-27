@@ -1877,6 +1877,44 @@ export const effectTypes = [
  */
 export const timingOptions = [
   {
+    value: 'GameFlowEvent',
+    label: '游戏流程相关时机',
+    children: [
+      {
+        value: 'GameStart',
+        label: '游戏开始时'
+      },
+      {
+        value: 'RoundStart',
+        label: '轮次开始时'
+      },
+      {
+        value: 'RoundEnd',
+        label: '轮次结束时'
+      },
+      {
+        value: 'TurnStart',
+        label: '回合开始时'
+      },
+      {
+        value: 'TurnEnd',
+        label: '回合结束时'
+      },
+      {
+        value: 'EventPhaseStart',
+        label: '阶段开始时'
+      },
+      {
+        value: 'EventPhaseProceeding',
+        label: '阶段进行时'
+      },
+      {
+        value: 'EventPhaseEnd',
+        label: '阶段结束时'
+      }
+    ]
+  },
+  {
     value: 'DamageEvent',
     label: '伤害相关时机',
     children: [
@@ -1991,6 +2029,96 @@ export const timingOptions = [
         label: '判定结束时'
       }
     ]
+  },
+  {
+    value: 'UsingCardEvent',
+    label: '使用/打出卡牌相关时机',
+    children: [
+      {
+        value: 'PreCardRespond',
+        label: '打出牌前'
+      },
+      {
+        value: 'CardResponding',
+        label: '打出牌时'
+      },
+      {
+        value: 'CardRespondFinished',
+        label: '打出牌后'
+      },
+      {
+        value: 'PreCardUse',
+        label: '使用牌前'
+      },
+      {
+        value: 'AfterCardUseDeclared',
+        label: '声明使用牌后'
+      },
+      {
+        value: 'AfterCardTargetDeclared',
+        label: '声明目标后'
+      },
+      {
+        value: 'CardUsing',
+        label: '使用牌时'
+      },
+      {
+        value: 'CardUseFinished',
+        label: '使用牌后'
+      },
+    ]
+  },
+  {
+    value: 'AimingEvent',
+    label: '目标相关时机',
+    children: [
+      {
+        value: 'TargetSpecifying',
+        label: '指定目标时'
+      },
+      {
+        value: 'TargetConfirming',
+        label: '成为目标时'
+      },
+      {
+        value: 'TargetSpecified',
+        label: '指定目标后'
+      },
+      {
+        value: 'TargetConfirmed',
+        label: '成为目标后'
+      },
+    ]
+  },
+  {
+    value: 'CardEffectEvent',
+    label: '卡牌效果相关时机',
+    children: [
+      {
+        value: 'BeforeCardUseEffect',
+        label: '牌生效前'
+      },
+      {
+        value: 'PreCardEffect',
+        label: '使用牌效果生效前'
+      },
+      {
+        value: 'BeforeCardEffect',
+        label: '牌效果生效前'
+      },
+      {
+        value: 'CardEffecting',
+        label: '牌效果生效时'
+      },
+      {
+        value: 'CardEffectFinished',
+        label: '牌效果生效后'
+      },
+      {
+        value: 'AfterCardUseDeclared',
+        label: '牌效果被抵消后'
+      },
+    ]
   }
 ];
 
@@ -2047,6 +2175,46 @@ const defineTriggerEffectMethods = (p) => {
 };
 
 // 这些是从原文件中提取的时机数据结构
+// 默认（无数据或并不重要）
+const DefaultEventTemplate = {
+  methods: defineTriggerEffectMethods([])
+};
+
+// gameflow.lua
+const PhaseEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '本阶段的执行者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.reason',
+      message: '当前阶段的来源',
+      type: 'String',
+      notParam: true
+    }
+  ])
+};
+
+const TurnEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.who',
+      message: '本回合的执行者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.reason',
+      message: '当前回合的来源',
+      type: 'String',
+      notParam: true
+    }
+  ])
+};
+
 // hp.lua
 const DamageEventTemplate = {
   methods: defineTriggerEffectMethods([
@@ -2247,7 +2415,119 @@ const PindianEventTemplate = {
   ])
 };
 
+// usecard.lua
+const RespondEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.from',
+      message: '打出者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.card',
+      message: '打出的牌',
+      type: 'Card ',
+      notParam: true
+    },
+  ])
+};
+
+const UseEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.from',
+      message: '使用者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.card',
+      message: '使用的牌',
+      type: 'Card ',
+      notParam: true
+    },
+    {
+      name: 'data.tos',
+      message: '使用牌的目标',
+      type: 'Array',
+      notParam: true
+    },
+  ])
+};
+
+const AimEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.from',
+      message: '使用者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.card',
+      message: '使用的牌',
+      type: 'Card ',
+      notParam: true
+    },
+    {
+      name: 'data.to',
+      message: '当前目标角色',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.firstTarget',
+      message: '首个目标？',
+      type: 'Boolean',
+      notParam: true
+    },
+  ])
+};
+
+const CardEffectEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.from',
+      message: '使用者',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.card',
+      message: '使用的牌',
+      type: 'Card ',
+      notParam: true
+    },
+    {
+      name: 'data.to',
+      message: '当前目标角色',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.tos',
+      message: '目标列表',
+      type: 'Array',
+      notParam: true
+    },
+    {
+      name: 'data.isCancellOut',
+      message: '被抵消？',
+      type: 'Boolean',
+      notParam: true
+    },
+  ])
+};
+
 const triggerEffectTemplates = {
+  // gameflow.lua
+  TurnStart: TurnEventTemplate,
+  TurnEnd: TurnEventTemplate,
+  EventPhaseStart: PhaseEventTemplate,
+  EventPhaseProceeding: PhaseEventTemplate,
+  EventPhaseEnd: PhaseEventTemplate,
+
   // hp.lua
   PreDamage: DamageEventTemplate,
   DamageCaused: DamageEventTemplate,
@@ -2278,15 +2558,32 @@ const triggerEffectTemplates = {
   PindianResultConfirmed: PindianEventTemplate,
   PindianFinished: PindianEventTemplate,
   
-  // pindian.lua
-  StartPindian: PindianEventTemplate,
-  PindianCardsDisplayed: PindianEventTemplate,
-  PindianResultConfirmed: PindianEventTemplate,
-  PindianFinished: PindianEventTemplate,
+  // usecard.lua
+  PreCardRespond: RespondEventTemplate,
+  CardResponding: RespondEventTemplate,
+  CardRespondFinished: RespondEventTemplate,
+
+  PreCardUse: UseEventTemplate,
+  AfterCardUseDeclared: UseEventTemplate,
+  AfterCardTargetDeclared: UseEventTemplate,
+  CardUsing: UseEventTemplate,
+  CardUseFinished: UseEventTemplate,
+
+  TargetSpecifying: AimEventTemplate,
+  TargetConfirming: AimEventTemplate,
+  TargetSpecified: AimEventTemplate,
+  TargetConfirmed: AimEventTemplate,
+
+  BeforeCardUseEffect: CardEffectEventTemplate,
+  PreCardEffect: CardEffectEventTemplate,
+  BeforeCardEffect: CardEffectEventTemplate,
+  CardEffecting: CardEffectEventTemplate,
+  CardEffectFinished: CardEffectEventTemplate,
+  AfterCardEffectCancelled: CardEffectEventTemplate
 };
 
 const getTriggerEffectTemplate = (triggerEvent) => {
-  const ret = triggerEffectTemplates[triggerEvent];
+  const ret = triggerEffectTemplates[triggerEvent] ?? DefaultEventTemplate;
   if (!ret) {
     throw new Error(`Unknown triggerEvent type: ${triggerEvent}`);
   }
