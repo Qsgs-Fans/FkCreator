@@ -42,13 +42,14 @@ const methodParamsCallback = function (workspace) {
     kind: 'block',
     type: 'simple_return',
   });
-  workspace.localMethod.params.forEach((v) => {
+  for (const v of workspace.localMethod.params) {
+    if (v.hiddenBlock) continue;
     const blkType = 'param_get_' + v.name;
     blockList.push({
       kind: 'block',
       type: blkType
     });
-  });
+  }
   return blockList;
 };
 

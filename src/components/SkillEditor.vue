@@ -78,8 +78,8 @@ const updateValue = (value) => {
 };
 const skillTagOptions = [
   { label: '主公技', value: 'Skill.Lord' },
-  { label: '锁定技', value: 'Skill.Compulsory' }
-  // { label: '限定技', value: 'Skill.Limited' },
+  { label: '锁定技', value: 'Skill.Compulsory' },
+  { label: '限定技', value: 'Skill.Limited' },
   // { label: '觉醒技', value: 'Skill.Wake' },
   // { label: '转换技', value: 'Skill.Switch' },
   // { label: '使命技', value: 'Skill.Quest' },
@@ -115,7 +115,7 @@ const formRules = reactive({
 const showAddEffectDialog = ref(false);
 
 const createEffect = (data) => {
-  const template = getTemplateByEffectType(data.type);
+  const template = getTemplateByEffectType(data.type, data.timing);
   if (!template || Object.keys(template).length === 0) {
     ElMessage.error('未找到效果模板');
     return;

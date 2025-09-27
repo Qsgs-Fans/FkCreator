@@ -1062,18 +1062,20 @@ export const effectTypes = [
               name: 'room',
               message: '所在房间',
               desc: '位于服务端的房间对象',
+              hiddenBlock: true,
               type: 'Room'
             },
             {
               name: 'skillUseEvent',
               message: '技能使用事件',
               desc: '本技能的使用信息',
+              hiddenBlock: true,
               type: 'SkillUseData'
             },
             {
               name: 'skillFrom',
               message: '技能发动者',
-              desc: '技能的发动者',
+              desc: '技能发动者',
               type: 'Player',
               notParam: true,
               generator: 'skillUseEvent.from'
@@ -1081,14 +1083,14 @@ export const effectTypes = [
             {
               name: 'skillTos',
               message: '技能目标',
-              desc: '技能所指向的目标',
+              desc: '技能目标列表',
               type: 'Array',
               notParam: true,
               generator: 'skillUseEvent.tos'
             },
             {
               name: 'skillCards',
-              message: '技能卡牌数组',
+              message: '技能已选卡牌列表',
               desc: '发动技能时所选择的卡牌',
               type: 'Array',
               notParam: true,
@@ -1865,25 +1867,9 @@ export const effectTypes = [
   {
     id: 'trigger',
     name: '触发类',
-    description: '在某时机触发，须指定唯一时机',
-    template: {
-      methods: []
-    }
+    description: '在某时机触发，须指定唯一时机'
   }
 ];
-
-/**
- * 获取指定效果类型的模板
- * @param effectType
- * @returns 模板
- */
-export const getTemplateByEffectType = (effectType) => {
-  const effect = effectTypes.find((e) => e.id === effectType);
-  if (!effect) {
-    throw new Error(`Unknown effect type: ${effectType}`);
-  }
-  return effect.template;
-};
 
 /**
  * 时机选项列表
@@ -1891,35 +1877,133 @@ export const getTemplateByEffectType = (effectType) => {
  */
 export const timingOptions = [
   {
-    value: 'hp',
-    label: '体力相关',
+    value: 'DamageEvent',
+    label: '伤害相关时机',
     children: [
       {
-        value: 'hp_change',
-        label: '体力变化时'
+        value: 'Damage',
+        label: '造成伤害后'
       },
       {
-        value: 'hp_lose',
-        label: '失去体力时'
-      },
-      {
-        value: 'hp_recovery',
-        label: '回复体力时'
-      }
-    ]
-  },
-  {
-    value: 'use_card',
-    label: '使用牌相关',
-    children: [
-      {
-        value: 'use_card_when',
-        label: '使用牌时'
-      },
-      {
-        value: 'use_card_after',
-        label: '使用牌后'
+        value: 'Damaged',
+        label: '受到伤害后'
       }
     ]
   }
 ];
+
+const defaultTriggerParams = [
+  {
+    name: 'self',
+    message: '本技能',
+    type: 'TriggerSkill'
+  },
+  {
+    name: 'event',
+    message: '当前触发时机',
+    type: 'TriggerEvent'
+  },
+  {
+    name: 'target',
+    message: '时机的承担者',
+    type: 'Player'
+  },
+  {
+    name: 'player',
+    message: '你',
+    type: 'Player'
+  },
+  {
+    name: 'data',
+    message: '时机数据',
+    hiddenBlock: true
+  }
+];
+
+const defineTriggerEffectMethods = (p) => {
+  const params = defaultTriggerParams.concat(p);
+  return [
+    {
+      name: 'can_trigger',
+      description: '是否满足触发条件',
+      type: 'server',
+      params
+    },
+    {
+      name: 'on_cost',
+      description: '技能的询问，返回true表示发动',
+      type: 'server',
+      params
+    },
+    {
+      name: 'on_use',
+      description: '技能效果',
+      type: 'server',
+      params
+    }
+  ];
+};
+
+const DamageEventTemplate = {
+  methods: defineTriggerEffectMethods([
+    {
+      name: 'data.from',
+      message: '伤害来源',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.to',
+      message: '伤害目标',
+      type: 'Player',
+      notParam: true
+    },
+    {
+      name: 'data.damage',
+      message: '伤害值',
+      type: 'Number',
+      notParam: true
+    },
+    {
+      name: 'data.card',
+      message: '造成伤害的牌',
+      type: 'Card',
+      notParam: true
+    },
+    {
+      name: 'data.skillName',
+      message: '造成本次伤害的技能名',
+      type: 'String',
+      notParam: true
+    }
+  ])
+};
+
+const triggerEffectTemplates = {
+  Damage: DamageEventTemplate,
+  Damaged: DamageEventTemplate
+};
+
+const getTriggerEffectTemplate = (triggerEvent) => {
+  const ret = triggerEffectTemplates[triggerEvent];
+  if (!ret) {
+    throw new Error(`Unknown triggerEvent type: ${triggerEvent}`);
+  }
+  return ret;
+};
+
+/**
+ * 获取指定效果类型的模板
+ * @param effectType
+ * @returns 模板
+ */
+export const getTemplateByEffectType = (effectType, triggerEvent) => {
+  if (effectType == 'trigger') {
+    return getTriggerEffectTemplate(triggerEvent);
+  }
+  const effect = effectTypes.find((e) => e.id === effectType);
+  if (!effect) {
+    throw new Error(`Unknown effect type: ${effectType}`);
+  }
+  return effect.template;
+};
