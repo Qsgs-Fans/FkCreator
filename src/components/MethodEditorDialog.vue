@@ -84,6 +84,7 @@ const localMethod = ref();
 const workspace = ref();
 const blocklyDiv = ref();
 const showSidePreview = ref(false);
+const saved = ref(true);
 
 // check viewport aspect ratio and enable side preview when width/height > 3/4
 function checkAspectRatio () {
@@ -119,6 +120,10 @@ onBeforeUnmount(() => {
   if (rawWorkspace) rawWorkspace.removeChangeListener(onWorkspaceChangeForCode);
 });
 const closeMethod = () => {
+  if (saved.value) {
+    close();
+    return;
+  }
   ElMessageBox.confirm('关闭编辑页面会导致未保存数据丢失，是否确认关闭？', '提示', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
@@ -207,6 +212,8 @@ const addDefaultStartBlock = () => {
 const onBlocklyChange = (event) => {
   // 确保function_start块不能被删除
   const rawWorkspace = toRaw(workspace.value);
+  if (event.type === Blockly.Events.BLOCK_DRAG)
+    saved.value = false;
   if (event.type === Blockly.Events.BLOCK_DELETE) {
     const block = rawWorkspace.getBlockById(event.blockId);
     if (block && block.type === 'function_start') {
@@ -239,6 +246,7 @@ const saveMethod = () => {
     blocksState: localMethod.value.blocksState
     // blocksCode: luaGenerator.workspaceToCode(rawWorkspace)
   });
+  saved.value = true;
 };
 const resetToDefault = () => {
   ElMessageBox.confirm('清空会导致未保存数据丢失，是否确认清空？', '提示', {
