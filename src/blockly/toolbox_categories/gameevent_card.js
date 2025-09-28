@@ -4,6 +4,18 @@ export default {
   colour: 'green',
   contents: [
     {
+      type: 'obtain_card',
+      kind: 'block',
+    },
+    {
+      type: 'throw_card',
+      kind: 'block',
+    },
+    {
+      type: 'recast_card',
+      kind: 'block',
+    },
+    {
       type: 'draw_card',
       kind: 'block',
       inputs: {
@@ -18,11 +30,7 @@ export default {
       }
     },
     {
-      type: 'throw_card',
-      kind: 'block',
-    },
-    {
-      type: 'recast_card',
+      type: 'show_card',
       kind: 'block',
     },
   ]

@@ -967,13 +967,13 @@ export const effectTypes = [
             },
             {
               name: 'to_select',
-              message: '选择的卡牌数量',
+              message: '待选择的目标牌',
               type: 'integer'
             },
             {
               name: 'selected',
-              message: '已选卡牌',
-              type: 'integer[]'
+              message: '已选的所有卡牌',
+              type: 'Array'
             }
           ],
           ret: 'any',
