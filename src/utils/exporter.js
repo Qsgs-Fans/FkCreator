@@ -104,7 +104,13 @@ Fk:loadTranslationTable {
 }\n\n`;
 
   skill.effects.forEach((effect) => {
-    luaCode += `_skill_val:addEffect('${effect.type}', {\n`;
+    let typeStr = "";
+    if (effect.type === "trigger") {
+      typeStr = `fk.${effect.timing}`;
+    } else {
+      typeStr = `'${effect.type}'`;
+    }
+    luaCode += `_skill_val:addEffect(${typeStr}, {\n`;
     effect.methods.forEach((m) => {
       if (!m.blocksState) return;
       luaCode += `  ${m.name} = function(`;
