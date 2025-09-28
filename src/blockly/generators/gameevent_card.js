@@ -50,7 +50,7 @@ export default () => {
       throw new Error("生成失败！必须指定要弃置的卡牌数组。");
     }
 
-    let code = `room:recastCard(${cards}, ${target}, _skill_val.name)`;
+    let code = `room:recastCard(${cards}, ${target}, _skill_val.name)\n`;
     return code;
   };
 };
