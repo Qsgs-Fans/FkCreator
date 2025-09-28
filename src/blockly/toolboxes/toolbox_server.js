@@ -9,6 +9,7 @@ import tb_player from '../toolbox_categories/player';
 import tb_general from '../toolbox_categories/general';
 import tb_matcher from '../toolbox_categories/matcher';
 
+import tb_gameflow_card from '../toolbox_categories/gameevent_card';
 import tb_gameflow_hp from '../toolbox_categories/gameevent_hp';
 import tb_gameflow_judge from '../toolbox_categories/gameevent_judge';
 
@@ -49,6 +50,7 @@ export default {
     tb_general,
     tb_matcher,
     { kind: 'sep' },
+    tb_gameflow_card,
     tb_gameflow_hp,
     tb_gameflow_judge
   ]

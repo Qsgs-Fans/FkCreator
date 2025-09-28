@@ -3,7 +3,11 @@ import { luaGenerator, Order } from 'blockly/lua';
 export default () => {
   luaGenerator.forBlock['deal_damage'] = function (block, generator) {
     const target = generator.valueToCode(block, 'TARGET', Order.ATOMIC) || 'nil';
-    // TODO if target is nil, error (must have target)
+
+    if (target == 'nil') {
+      throw new Error("生成失败！必须指定一个目标。");
+    }
+
     const amount = generator.valueToCode(block, 'AMOUNT', Order.ATOMIC);
     let code = `room:damage {\n  to = ${target},\n  damage = ${amount},\n`;
 
@@ -18,20 +22,28 @@ export default () => {
       code += `  nature = fk.${dmgtype},\n`;
     }
 
-    code += '}\n';
+    code += '  skillName = _skill_val.name\n}\n';
     return code;
   };
   luaGenerator.forBlock['lose_hp'] = function (block, generator) {
     const target = generator.valueToCode(block, 'TARGET', Order.ATOMIC) || 'nil';
-    // TODO if target is nil, error (must have target)
+
+    if (target == 'nil') {
+      throw new Error("生成失败！必须指定一个目标。");
+    }
+
     const amount = generator.valueToCode(block, 'AMOUNT', Order.ATOMIC) || 1;
 
-    let code = `room:loseHp(${target}, ${amount})\n`;
+    let code = `room:loseHp(${target}, ${amount}, _skill_val.name)\n`;
     return code;
   };
   luaGenerator.forBlock['recover_hp'] = function (block, generator) {
     const target = generator.valueToCode(block, 'TARGET', Order.ATOMIC) || 'nil';
-    // TODO if target is nil, error (must have target)
+
+    if (target == 'nil') {
+      throw new Error("生成失败！必须指定一个目标。");
+    }
+
     const amount = generator.valueToCode(block, 'AMOUNT', Order.ATOMIC);
     let code = `room:recover {\n  who = ${target},\n  num = ${amount},\n`;
 
@@ -45,12 +57,16 @@ export default () => {
       code += `  card = ${source},\n`;
     }
 
-    code += '}\n';
+    code += '  skillName = _skill_val.name\n}\n';
     return code;
   };
   luaGenerator.forBlock['change_maxhp'] = function (block, generator) {
     const target = generator.valueToCode(block, 'TARGET', Order.ATOMIC) || 'nil';
-    // TODO if target is nil, error (must have target)
+
+    if (target == 'nil') {
+      throw new Error("生成失败！必须指定一个目标。");
+    }
+
     const amount = generator.valueToCode(block, 'AMOUNT', Order.ATOMIC) || 1;
 
     let code = `room:changeMaxHp(${target},${amount})\n`;

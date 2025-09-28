@@ -228,6 +228,7 @@ const testMethod = async () => {
       showCodeDialog.value = true;
     }
   } catch (error) {
+    console.error('生成lua失败', error);
     ElMessageBox.alert('预览lua失败: ' + error.message, { type: 'error' });
   }
 };

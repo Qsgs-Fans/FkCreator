@@ -3,11 +3,20 @@ import { luaGenerator, Order } from 'blockly/lua';
 export default () => {
   luaGenerator.forBlock['judge'] = function (block, generator) {
     const who = generator.valueToCode(block, 'WHO', Order.ATOMIC) || 'nil';
-    // TODO if target is nil, error (must have target)
-    const pattern = generator.valueToCode(block, 'PATTERN', Order.ATOMIC);
-    const reason = generator.valueToCode(block, 'REASON', Order.ATOMIC);
 
-    let code = `room:judge {\n  who = ${who},\n  pattern = ${pattern},\n  reason = ${reason},\n`;
+    if (who == 'nil') {
+      throw new Error("生成失败！必须指定一个目标。");
+    }
+
+    const pattern = generator.valueToCode(block, 'PATTERN', Order.ATOMIC) || 'nil';
+
+    if (pattern == 'nil') {
+      throw new Error("生成失败！必须指定一个匹配模式。");
+    }
+
+    // const reason = generator.valueToCode(block, 'REASON', Order.ATOMIC);
+
+    let code = `room:judge {\n  who = ${who},\n  pattern = ${pattern},\n  reason = _skill_val.name,\n`;
 
     // 因为是可选input 需要写判断
     if (block.getInput('CARD')) {
@@ -29,13 +38,12 @@ export default () => {
 
     const data = generator.valueToCode(block, 'DATA', Order.ATOMIC) || 'nil';
 
-    let code = `room:changeJudge{\n  card = ${card},\n  player = ${player},\n  data = ${data},\n`;
+    let code = `room:changeJudge{\n  card = ${card},\n  player = ${player},\n  data = ${data},\n  skillName = _skill_val.name,\n`;
 
-    // 因为是可选input 需要写判断
-    if (block.getInput('SKILLNAME')) {
-      const skillname = generator.valueToCode(block, 'SKILLNAME', Order.ATOMIC);
-      code += `  skillName = ${skillname},\n`;
-    }
+    // if (block.getInput('SKILLNAME')) {
+    //   const skillname = generator.valueToCode(block, 'SKILLNAME', Order.ATOMIC);
+    //   code += `  skillName = ${skillname},\n`;
+    // }
     if (block.getInput('EXCANGE')) {
       const exchange = generator.valueToCode(block, 'EXCANGE', Order.ATOMIC) || 'false';
       code += `  exchange = ${exchange},\n`;

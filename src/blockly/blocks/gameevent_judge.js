@@ -2,11 +2,10 @@ import { createConfigurableBlock } from './factory';
 
 const judgeBlocks = createConfigurableBlock({
   type: 'judge',
-  message: '令一名角色进行一次判定\n判定对象%1 判定成功的条件%2  判定原因（技能名）%3',
+  message: '令一名角色进行一次判定\n判定对象%1 判定成功的条件%2',
   args: [
     { type: 'input_value', name: 'WHO', check: 'Player' },
-    { type: 'input_value', name: 'PATTERN', check: 'String' },
-    { type: 'input_value', name: 'REASON', check: 'String' }
+    { type: 'input_value', name: 'PATTERN', check: 'String' }
   ],
   colour: 230,
   tooltip: '进行一次判定',
@@ -33,7 +32,6 @@ const retrialBlocks = createConfigurableBlock({
   colour: 230,
   tooltip: '改判',
   optionalFields: [
-    { name: 'SKILLNAME', message: '改判的技能名', inputType: 'input_value', check: 'String' },
     { name: 'EXCHANGE', message: '改判者是否获得原判定牌（鬼道）', inputType: 'input_value', check: 'Boolean' },
     { name: 'RESPONSE', message: '是否以打出方式改判', inputType: 'input_value', check: 'Boolean' }
   ],

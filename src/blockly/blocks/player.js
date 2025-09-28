@@ -237,19 +237,18 @@ Blockly.Blocks['player_prohibited_card'] = {
 export default [
   {
     type: 'player_has_skill',
-    message0: '角色 %1 是否拥有技能 %2',
+    message0: '角色 %1 拥有本技能？',
     args0: [
-      { type: 'input_value', name: 'PLAYER', check: 'Player' },
-      { type: 'input_value', name: 'NAME', check: 'String', align: 'RIGHT' }
+      { type: 'input_value', name: 'PLAYER', check: 'Player' }
     ],
     colour: 230,
-    tooltip: '获得角色是否拥有某个技能',
+    tooltip: '获得角色是否拥有当前技能',
     output: 'Boolean',
     inputsInline: true,
   },
   {
     type: 'player_has_delay',
-    message0: '角色 %1 的判定区内是否有延时锦囊 %2',
+    message0: '角色 %1 的判定区内有延时锦囊 %2 ？',
     args0: [
       { type: 'input_value', name: 'PLAYER', check: 'Player' },
       { type: 'input_value', name: 'DELAY', check: 'String', align: 'RIGHT' }
@@ -297,13 +296,13 @@ export default [
   },
   {
     type: 'player_in_attack_range',
-    message0: '角色 %1 的攻击范围内是否含有角色 %2',
+    message0: '角色 %1 的攻击范围内含有角色 %2 ？',
     args0: [
       { type: 'input_value', name: 'FROM', check: 'Player' },
       { type: 'input_value', name: 'TO', check: 'Player', align: 'RIGHT' }
     ],
     colour: 230,
-    tooltip: '获得角色的攻击范围内内是否有另一名角色',
+    tooltip: '获得另一名角色是否在第一名角色的攻击范围内',
     output: 'Boolean',
     inputsInline: true,
   },

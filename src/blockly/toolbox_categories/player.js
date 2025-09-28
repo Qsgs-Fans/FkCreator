@@ -35,17 +35,7 @@ export default {
     },
     {
       type: 'player_has_skill',
-      kind: 'block',
-      inputs: {
-        NAME: {
-          shadow: {
-            type: 'text',
-            fields: {
-              TEXT: ''
-            }
-          }
-        },
-      }
+      kind: 'block'
     },
     {
       type: 'player_has_delay',

@@ -61,13 +61,12 @@ export default () => {
 
   luaGenerator.forBlock['player_has_skill'] = function (block, generator) {
     const player = generator.valueToCode(block, 'PLAYER', Order.ATOMIC) || 'nil';
-    const name = generator.valueToCode(block, 'NAME', Order.ATOMIC) || 'nil';
 
-    if (player == 'nil' || name == 'nil') {
-      throw new Error("生成失败！必须指定角色和技能名。");
+    if (player == 'nil') {
+      throw new Error("生成失败！必须指定一名角色。");
     }
 
-    return [`${player}:hasSkill(${name})`, Order.ATOMIC];
+    return [`${player}:hasSkill(_skill_val.name)`, Order.ATOMIC];
   };
 
   luaGenerator.forBlock['player_has_delay'] = function (block, generator) {
